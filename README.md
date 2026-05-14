@@ -1,15 +1,17 @@
-# Ukulima254
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>Golden Nest • Premium Poultry Farm</title>
-  <!-- Google Fonts & Font Awesome for modern icons -->
+  <!-- Google Fonts for modern typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* ----- RESET & BASE STYLES (Mobile-First) ----- */
     * {
       margin: 0;
       padding: 0;
@@ -18,8 +20,8 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #f5f3e9;
-      color: #2d3a1f;
+      background: #f8f6f0;
+      color: #1e2b1c;
       line-height: 1.5;
       scroll-behavior: smooth;
     }
@@ -28,380 +30,483 @@
       font-family: 'Playfair Display', serif;
     }
 
-    /* Color palette: dark green #1e3b2f, gold #c7a44d, soft cream */
+    /* Color palette: dark green #1a2f1d, black #0f0f0f, gold #c4a44a */
     :root {
-      --deep-green: #1e3b2f;
-      --green-dark: #0f2a1f;
-      --gold: #c7a44d;
-      --gold-light: #e1c97b;
-      --cream: #fdfaf3;
-      --soft-white: #ffffff;
-      --glass-bg: rgba(255, 255, 255, 0.25);
-      --glass-border: rgba(255, 255, 255, 0.4);
-      --shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
+      --deep-green: #1a2f1d;
+      --black: #111;
+      --gold: #c4a44a;
+      --gold-light: #dfc27d;
+      --cream: #fefcf5;
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --glass-border: rgba(255, 255, 255, 0.35);
+      --card-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      --transition: 0.3s ease;
     }
 
-    /* Smooth animations */
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Keyframes for fade-up animation */
     @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(30px); }
+      0% { opacity: 0; transform: translateY(25px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    .animate-on-scroll {
-      animation: fadeUp 0.8s ease-out forwards;
+    .animate {
+      animation: fadeUp 0.7s ease forwards;
     }
 
-    /* Navigation */
+    /* ----- MOBILE-FIRST NAVIGATION ----- */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 5%;
-      background: rgba(30, 59, 47, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      padding: 0.9rem 1.2rem;
+      background: rgba(26, 47, 29, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       position: fixed;
       width: 100%;
       top: 0;
       z-index: 1000;
-      border-bottom: 1px solid rgba(199, 164, 77, 0.3);
-      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(196, 164, 74, 0.35);
     }
 
     .logo {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       font-weight: 700;
       color: var(--gold);
-      letter-spacing: 1px;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     .logo i {
-      font-size: 2rem;
       color: var(--gold-light);
+      font-size: 1.9rem;
     }
 
     .nav-links {
-      display: flex;
-      gap: 2.2rem;
-      align-items: center;
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background: rgba(26, 47, 29, 0.96);
+      backdrop-filter: blur(20px);
+      position: absolute;
+      top: 65px;
+      left: 0;
+      padding: 1.2rem 1.5rem;
+      border-radius: 0 0 20px 20px;
+      gap: 1rem;
     }
+
+    .nav-links.active {
+      display: flex;
+    }
+
     .nav-links a {
-      color: #f0ead0;
+      color: #f2e9cf;
       text-decoration: none;
       font-weight: 500;
-      transition: 0.3s;
+      font-size: 1.1rem;
+      transition: color 0.3s;
       position: relative;
-      font-size: 1rem;
+      padding: 0.3rem 0;
     }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: var(--gold);
-      transition: 0.3s;
-    }
+
     .nav-links a:hover {
       color: var(--gold-light);
     }
-    .nav-links a:hover::after {
-      width: 100%;
-    }
 
     .menu-toggle {
-      display: none;
       font-size: 1.8rem;
       color: var(--gold);
       cursor: pointer;
+      background: none;
+      border: none;
     }
 
-    /* Hero section */
+    /* ----- HERO SECTION (mobile-first) ----- */
     .hero {
-      min-height: 90vh;
-      background: linear-gradient(rgba(15, 42, 31, 0.7), rgba(30, 59, 47, 0.75)), 
+      min-height: 85vh;
+      background: linear-gradient(rgba(15, 25, 15, 0.7), rgba(26, 47, 29, 0.8)), 
                   url('https://images.unsplash.com/photo-1586348943529-beaae6c28db9?q=80&w=2070&auto=format&fit=crop');
       background-size: cover;
-      background-position: center 30%;
+      background-position: center 35%;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0 2rem;
-      margin-top: 70px;
+      padding: 5rem 1.2rem 2rem;
+      margin-top: 65px;
       color: white;
     }
+
     .hero-content {
-      max-width: 800px;
       background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 30px;
-      padding: 2.5rem;
-      border: 1px solid rgba(199, 164, 77, 0.35);
-      box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(196, 164, 74, 0.45);
+      max-width: 500px;
+      width: 100%;
     }
+
     .hero h1 {
-      font-size: 3.5rem;
+      font-size: 2.4rem;
       font-weight: 700;
-      color: #fff;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-      margin-bottom: 1rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+      margin-bottom: 0.8rem;
     }
+
     .hero p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      margin-bottom: 1.8rem;
       color: #f3efd9;
     }
+
     .btn {
       background: var(--gold);
-      color: var(--deep-green);
-      padding: 0.85rem 2.2rem;
-      border-radius: 50px;
+      color: #111;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
       font-weight: 700;
       text-decoration: none;
       display: inline-block;
-      transition: 0.3s;
+      transition: all 0.3s;
       border: none;
       cursor: pointer;
-      letter-spacing: 0.5px;
-      box-shadow: 0 8px 18px rgba(199, 164, 77, 0.4);
-    }
-    .btn:hover {
-      background: #e1c97b;
-      transform: translateY(-3px);
-      box-shadow: 0 14px 22px rgba(199, 164, 77, 0.6);
+      letter-spacing: 0.4px;
+      box-shadow: 0 6px 16px rgba(196, 164, 74, 0.35);
+      font-size: 0.95rem;
     }
 
-    /* Section styling */
-    section {
-      padding: 5rem 5%;
+    .btn:hover {
+      background: #dbb44b;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 22px rgba(196, 164, 74, 0.55);
     }
+
+    /* ----- GENERAL SECTION STYLING ----- */
+    section {
+      padding: 3.5rem 1.2rem;
+    }
+
     .section-title {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
+
     .section-title h2 {
-      font-size: 2.7rem;
+      font-size: 2.2rem;
       color: var(--deep-green);
       position: relative;
       display: inline-block;
     }
+
     .section-title h2::after {
       content: '';
-      width: 70px;
-      height: 4px;
+      width: 65px;
+      height: 3px;
       background: var(--gold);
       position: absolute;
-      bottom: -12px;
+      bottom: -10px;
       left: 50%;
       transform: translateX(-50%);
     }
 
-    /* Glass cards */
+    /* Glass card base */
     .glass-card {
-      background: var(--glass-bg);
+      background: rgba(255, 255, 250, 0.65);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-radius: 24px;
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--shadow);
-      transition: transform 0.3s ease, box-shadow 0.3s;
-    }
-    .glass-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 28px 40px rgba(0, 0, 0, 0.15);
+      border-radius: 26px;
+      border: 1px solid rgba(196, 164, 74, 0.4);
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    /* About + Services grid */
+    .glass-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 35px rgba(0,0,0,0.12);
+    }
+
+    /* ----- ABOUT SECTION (flex) ----- */
     .about-grid {
       display: flex;
-      flex-wrap: wrap;
-      gap: 3rem;
+      flex-direction: column;
+      gap: 2rem;
       align-items: center;
     }
+
     .about-text {
-      flex: 1 1 400px;
+      font-size: 1rem;
+      text-align: center;
     }
-    .about-image {
-      flex: 1 1 400px;
-      border-radius: 28px;
-      overflow: hidden;
-    }
+
     .about-image img {
       width: 100%;
       height: auto;
-      display: block;
       border-radius: 28px;
+      object-fit: cover;
+      max-height: 350px;
     }
 
-    .services-grid, .products-grid, .pricing-grid {
+    /* ----- SERVICES & PRODUCTS GRID (mobile-first single column) ----- */
+    .services-grid,
+    .products-grid,
+    .pricing-grid,
+    .testimonial-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
+      grid-template-columns: 1fr;
+      gap: 1.8rem;
+      margin-top: 1.5rem;
     }
-    .service-card, .product-card, .pricing-card {
-      padding: 2rem 1.5rem;
+
+    .service-card,
+    .product-card,
+    .pricing-card,
+    .testimonial-card {
       text-align: center;
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 28px;
-      border: 1px solid rgba(199, 164, 77, 0.4);
+      padding: 1.8rem 1.2rem;
     }
-    .service-card i, .product-card i {
-      font-size: 2.8rem;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-    .price {
+
+    .service-card i,
+    .product-card i {
       font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .price {
+      font-size: 2.2rem;
       font-weight: 700;
       color: var(--deep-green);
-      margin: 1rem 0;
-    }
-    .pricing-card ul {
-      list-style: none;
-      margin: 1.2rem 0;
-    }
-    .pricing-card li {
-      margin: 0.5rem 0;
+      margin: 0.8rem 0;
     }
 
-    /* Testimonials */
-    .testimonial-card {
-      background: rgba(255,255,240,0.8);
-      backdrop-filter: blur(12px);
-      padding: 2rem;
-      border-radius: 30px;
-      text-align: center;
+    .pricing-card ul {
+      list-style: none;
+      margin: 1rem 0;
     }
+
     .testimonial-card img {
       width: 70px;
       height: 70px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid var(--gold);
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    /* Gallery grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 20px;
+      transition: transform 0.3s;
+      border: 2px solid rgba(196,164,74,0.3);
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.02);
     }
 
     /* Contact form */
     .contact-form {
-      max-width: 650px;
+      max-width: 600px;
       margin: 0 auto;
-      background: rgba(255, 255, 250, 0.75);
-      backdrop-filter: blur(16px);
-      padding: 2.5rem;
-      border-radius: 32px;
-      border: 1px solid rgba(199,164,77,0.5);
-    }
-    .contact-form input, .contact-form textarea {
-      width: 100%;
-      padding: 0.9rem;
-      margin: 0.8rem 0;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      background: rgba(255,255,255,0.8);
-      font-family: 'Inter', sans-serif;
+      padding: 2rem 1.5rem;
     }
 
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.85rem;
+      margin: 0.7rem 0;
+      border-radius: 20px;
+      border: 1px solid #d4c9a8;
+      background: rgba(255,255,250,0.85);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+    }
+
+    /* Footer */
     footer {
-      background: var(--deep-green);
-      color: #e9e2c7;
-      padding: 2.5rem 5%;
+      background: #0f1f12;
+      color: #e0d7b9;
+      padding: 2.5rem 1.2rem;
       text-align: center;
     }
+
     .social-links a {
       color: var(--gold-light);
-      margin: 0 0.8rem;
+      margin: 0 0.7rem;
       font-size: 1.6rem;
       transition: 0.3s;
     }
+
     .social-links a:hover {
       color: white;
-      transform: scale(1.2);
+      transform: scale(1.15);
     }
 
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background: rgba(30, 59, 47, 0.95);
-        margin-top: 1rem;
-        padding: 1rem 0;
-        border-radius: 16px;
-      }
-      .nav-links.active {
-        display: flex;
-      }
-      .menu-toggle {
-        display: block;
-      }
+    /* ----- MEDIA QUERIES FOR LARGER SCREENS (Tablets & Desktops) ----- */
+    @media (min-width: 640px) {
       .hero h1 {
-        font-size: 2.5rem;
+        font-size: 3rem;
       }
+
+      .services-grid,
+      .products-grid,
+      .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-grid {
+        flex-direction: row;
+        text-align: left;
+        gap: 2.5rem;
+      }
+
+      .about-text {
+        text-align: left;
+        flex: 1;
+      }
+
+      .about-image {
+        flex: 1;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .navbar {
+        padding: 1rem 5%;
+      }
+
+      .menu-toggle {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        width: auto;
+        background: transparent;
+        backdrop-filter: none;
+        padding: 0;
+        gap: 2.2rem;
+      }
+
+      .nav-links a {
+        font-size: 1rem;
+      }
+
+      .hero-content {
+        padding: 2.8rem;
+      }
+
+      section {
+        padding: 4.5rem 5%;
+      }
+
+      .pricing-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero h1 {
+        font-size: 3.8rem;
+      }
+
+      .services-grid,
+      .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .testimonial-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* Ensure no horizontal scroll */
+    body, html {
+      max-width: 100%;
+      overflow-x: hidden;
     }
   </style>
 </head>
 <body>
+  <!-- Navigation Bar -->
   <nav class="navbar">
     <div class="logo">
       <i class="fas fa-feather-alt"></i> GoldenNest
     </div>
-    <div class="menu-toggle" id="menuToggle">
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
       <i class="fas fa-bars"></i>
-    </div>
+    </button>
     <div class="nav-links" id="navLinks">
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#products">Products</a>
-      <a href="#pricing">Pricing</a>
+      <a href="#gallery">Gallery</a>
       <a href="#testimonials">Reviews</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
 
-  <!-- Hero -->
+  <!-- Hero Section -->
   <section id="home" class="hero">
-    <div class="hero-content">
+    <div class="hero-content animate">
       <h1>Fresh From The Farm</h1>
       <p>Organic eggs, healthy broilers & day-old chicks raised with care.</p>
       <a href="#products" class="btn">Explore Products</a>
     </div>
   </section>
 
-  <!-- About Us -->
+  <!-- About Section -->
   <section id="about">
-    <div class="section-title"><h2>About Golden Nest</h2></div>
+    <div class="section-title"><h2>About Our Farm</h2></div>
     <div class="about-grid">
       <div class="about-text">
-        <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Nestled in rolling green pastures, we combine traditional farming with modern sustainability. Our free-range hens enjoy sunlight and space, producing rich golden yolks.</p>
-        <p>With over 15 years of experience, we deliver premium poultry while protecting the land. Every chick, egg, and broiler reflects our passion for quality.</p>
+        <p style="font-size: 1.1rem; margin-bottom: 1.2rem;">Golden Nest combines tradition with sustainability. Our free-range hens roam green pastures, producing eggs with deep golden yolks.</p>
+        <p>With over 15 years of expertise, we deliver premium poultry while protecting the environment.</p>
       </div>
       <div class="about-image">
-        <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1974&auto=format&fit=crop" alt="Free range chickens on green farm">
+        <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1974&auto=format&fit=crop" alt="Free range chickens on farm" loading="lazy">
       </div>
     </div>
   </section>
 
-  <!-- Services -->
-  <section id="services" style="background: #eef3e0;">
+  <!-- Services Section -->
+  <section id="services" style="background: #f3f0e3;">
     <div class="section-title"><h2>Our Services</h2></div>
     <div class="services-grid">
       <div class="service-card glass-card">
         <i class="fas fa-tractor"></i>
         <h3>Farm Consulting</h3>
-        <p>Expert advice on poultry setup, biosecurity & feed management.</p>
+        <p>Expert advice on poultry setup & biosecurity.</p>
       </div>
       <div class="service-card glass-card">
         <i class="fas fa-egg"></i>
         <h3>Egg Supply</h3>
-        <p>Daily fresh organic eggs for households & businesses.</p>
+        <p>Daily fresh organic eggs for families & businesses.</p>
       </div>
       <div class="service-card glass-card">
         <i class="fas fa-drumstick-bite"></i>
@@ -411,84 +516,58 @@
     </div>
   </section>
 
-  <!-- Products -->
+  <!-- Products Section -->
   <section id="products">
     <div class="section-title"><h2>Poultry Products</h2></div>
     <div class="products-grid">
       <div class="product-card glass-card">
         <i class="fas fa-egg"></i>
         <h3>Organic Eggs</h3>
-        <p>Free-range, rich in omega-3. Available by crate or tray.</p>
+        <p>Free-range, rich in omega-3. Available by tray.</p>
       </div>
       <div class="product-card glass-card">
         <i class="fas fa-drumstick-bite"></i>
         <h3>Broilers</h3>
-        <p>Corn-fed broilers (2-3kg), vacuum packed fresh.</p>
+        <p>Corn-fed broilers (2-3kg), vacuum packed.</p>
       </div>
       <div class="product-card glass-card">
         <i class="fas fa-kiwi-bird"></i>
         <h3>Day-Old Chicks</h3>
-        <p>Vaccinated layers & broilers, perfect for starting your flock.</p>
+        <p>Vaccinated layers & broilers for your flock.</p>
       </div>
     </div>
   </section>
 
-  <!-- Pricing Cards -->
-  <section id="pricing" style="background: #faf7ed;">
-    <div class="section-title"><h2>Transparent Pricing</h2></div>
-    <div class="pricing-grid">
-      <div class="pricing-card glass-card">
-        <h3>Egg Basket</h3>
-        <div class="price">$8<span>/tray</span></div>
-        <ul>
-          <li>30 fresh eggs</li>
-          <li>Free-range certified</li>
-          <li>Weekly delivery</li>
-        </ul>
-        <a href="#" class="btn">Order</a>
-      </div>
-      <div class="pricing-card glass-card">
-        <h3>Broiler Pack</h3>
-        <div class="price">$14<span>/bird</span></div>
-        <ul>
-          <li>2.5 kg average</li>
-          <li>Dressed & clean</li>
-          <li>5 birds minimum</li>
-        </ul>
-        <a href="#" class="btn">Order</a>
-      </div>
-      <div class="pricing-card glass-card">
-        <h3>Chick Starter</h3>
-        <div class="price">$3<span>/chick</span></div>
-        <ul>
-          <li>Vaccinated</li>
-          <li>Hybrid layers</li>
-          <li>Bulk discount</li>
-        </ul>
-        <a href="#" class="btn">Inquire</a>
-      </div>
+  <!-- Gallery Section -->
+  <section id="gallery" style="background: #f9f7ef;">
+    <div class="section-title"><h2>Farm Gallery</h2></div>
+    <div class="gallery-grid">
+      <img src="https://images.unsplash.com/photo-1598965675045-45c5e72c7d05?q=80&w=1974&auto=format&fit=crop" alt="Hen with eggs" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?q=80&w=1974&auto=format&fit=crop" alt="Chicken coop" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?q=80&w=1974&auto=format&fit=crop" alt="Free range chickens" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?q=80&w=1974&auto=format&fit=crop" alt="Poultry farm landscape" loading="lazy">
     </div>
   </section>
 
-  <!-- Testimonials -->
+  <!-- Testimonials Section -->
   <section id="testimonials">
-    <div class="section-title"><h2>From Our Customers</h2></div>
-    <div class="services-grid">
+    <div class="section-title"><h2>Happy Customers</h2></div>
+    <div class="testimonial-grid">
       <div class="testimonial-card glass-card">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop&facearea=1&h=100" alt="Customer">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop&facearea=1&h=100" alt="Customer" loading="lazy">
         <p>"The eggs are incredibly fresh! Golden yolks every morning."</p>
         <h4>Michael Roberts</h4>
         <small>Local Chef</small>
       </div>
       <div class="testimonial-card glass-card">
-        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop&facearea=1&h=100" alt="Customer">
-        <p>"Broilers taste like real chicken, not factory farmed. Highly recommend."</p>
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop&facearea=1&h=100" alt="Customer" loading="lazy">
+        <p>"Broilers taste like real chicken. Highly recommend."</p>
         <h4>Sarah Lin</h4>
         <small>Homesteader</small>
       </div>
       <div class="testimonial-card glass-card">
-        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&facearea=1&h=100" alt="Customer">
-        <p>"Day-old chicks are healthy and strong. Great support from the farm."</p>
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&facearea=1&h=100" alt="Customer" loading="lazy">
+        <p>"Day-old chicks are healthy and strong. Great support."</p>
         <h4>David Okafor</h4>
         <small>Poultry Farmer</small>
       </div>
@@ -497,7 +576,7 @@
 
   <!-- Contact Form -->
   <section id="contact">
-    <div class="section-title"><h2>Get In Touch</h2></div>
+    <div class="section-title"><h2>Contact Us</h2></div>
     <div class="contact-form glass-card">
       <form id="contactForm">
         <input type="text" placeholder="Your Name" required>
@@ -511,54 +590,77 @@
   <!-- Footer -->
   <footer>
     <div class="social-links">
-      <a href="#"><i class="fab fa-facebook-f"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
     </div>
     <p style="margin-top: 1.2rem;">© 2025 Golden Nest Poultry Farm • Freshness Delivered Daily</p>
   </footer>
 
   <script>
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
+    (function() {
+      // Mobile menu toggle
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
 
-    // Smooth scroll for anchor links & close mobile menu
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
-        if (targetSection) {
-          targetSection.scrollIntoView({ behavior: 'smooth' });
-          navLinks.classList.remove('active');
-        }
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a nav link (mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+          });
+        });
+
+        // Close menu if clicking outside
+        document.addEventListener('click', function(event) {
+          if (!event.target.closest('.navbar')) {
+            navLinks.classList.remove('active');
+          }
+        });
+      }
+
+      // Smooth scroll for any anchor with hash
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === "#") return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
       });
-    });
 
-    // Simple form submission prevention & feedback
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('Thank you for your message! We will get back to you soon.');
-      form.reset();
-    });
+      // Contact form submission
+      const form = document.getElementById('contactForm');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          alert('Thank you for your message! We will get back to you soon.');
+          form.reset();
+        });
+      }
 
-    // Add subtle animation on scroll (basic intersection observer)
-    const animatedElements = document.querySelectorAll('.glass-card, .about-image, .hero-content');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animation = 'fadeUp 0.7s ease forwards';
-        }
-      });
-    }, { threshold: 0.2 });
+      // Simple scroll reveal animation
+      const revealElements = document.querySelectorAll('.glass-card, .about-image img, .hero-content');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animation = 'fadeUp 0.7s ease forwards';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
 
-    animatedElements.forEach(el => observer.observe(el));
+      revealElements.forEach(el => observer.observe(el));
+    })();
   </script>
 </body>
 </html>
